@@ -1,0 +1,100 @@
+:root {
+    --color-error: #c33;
+    --color-success: #4bb544;
+    --color-border: black;
+    --color-box_bg: #f6f6f699;
+    --color-footer_bg: #09090999;
+    --color-input_bg: #f6f6f6;
+    --color-input_bgfocus: white;
+
+    background-image: url(../assets/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+body {
+    display: flex;
+    margin: auto;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+.login-box {
+    font: 400 2.5vh 'Roboto', sans-serif;
+    width: 85vw;
+    max-width: 60vh;
+    margin: auto;
+    text-align: center;
+    padding: 0.75vh 1vw 0 1vw;
+    border-style: solid;
+    border-color: --color-border;
+    border-radius: 2.75vh;
+    background-color: var(--color-box_bg);
+    border-width: 0.2vh;
+    box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.19), 0 0.6vh 0.6vh rgba(0, 0, 0, 0.23);
+}
+.logo-container {
+    width: 35%;
+    margin: auto auto 3vh auto;
+    text-align: center;
+}
+#login-error-message {
+    margin: 3vh;
+    color: var(--color-error);
+}
+h1 {
+    font-size: 3vh;
+}
+
+input {
+    width: 80%;
+    text-align: center;
+    font-size: 3vh;
+    margin-bottom: 1.5vh;
+    padding: 0.65vh;
+    border-radius: 1.25vh;
+    border-width: 0.15vh;
+    background-color: var(--color-input_bg);
+}
+input:focus {
+    outline: none;
+    background-color: var(--color-input_bgfocus);
+}
+#loginButton {
+    transition-duration: 0.25s;
+    font-size: 3vh;
+    border: 1px solid black;
+    border-radius: 1.25vh;
+    padding: 0.6vh 2.375vh;
+    background-color: var(--color-success);
+}
+#loginButton:hover:enabled {
+    background-color: #13940a;
+    color: white;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+button:disabled {
+    color: #333;
+    background-color: #aaa;
+}
+footer {
+    color: white;
+    font: 300 2.25vh 'Roboto', sans-serif;
+    background-color: var(--color-footer_bg);
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    justify-content: center;
+    margin: 0 auto 0 auto;
+    padding-top: 0.5vh;
+    text-align: center;
+    width: 100vw;
+    height: 3.75vh;
+}
+
+#hidden-message {
+    font-size: 0px;
+}

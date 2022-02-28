@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { User } from '../interfaces/interfaces';
 import './main.css';
+import DOMPurify from 'dompurify';
 
 export interface IMainPageProps {
     authToken: string;
@@ -17,6 +18,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const token = 'Basic ' + props.authToken;
     const users2: User[] = [];
     const [userContent, setUserContent]: [User[], (users: User[]) => void] = useState(users2);
+    const [content, setContent] = useState('<div>OIDA2</div>');
 
     /*     useEffect(() => { //MAYBE ALTER THIS TO BE TRIGGERED BY ANY BUTTON PRESSED AND SUBSEQUENTLY CHANGE CONTENT OF CONTENTBOX ACCORDINGLY???
         //Eventhook
@@ -33,6 +35,10 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
             setUserContent(response.data);
             console.log(response.data);
         });
+    }
+
+    function testFunction() {
+        setContent('<div>HELLOOOOOO2</div>');
     }
 
     return (
@@ -56,7 +62,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
-                                        <a href="#" onClick={getUsers}>
+                                        <a href="#" onClick={testFunction}>
                                             Mitarbeiterliste
                                         </a>
                                     </li>
@@ -176,13 +182,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 {<hr />}
                 <div id="content-box">
                     <h1>Content</h1>
-                    <div id="display">
-                        {userContent.map((user) => (
-                            <li key={user.id}>
-                                {user.id} {user.firstName} {user.lastName} {user.email}
-                            </li>
-                        ))}
-                    </div>
+                    <div id="display" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(`${content}`) }}></div>
                 </div>
             </div>
         </div>

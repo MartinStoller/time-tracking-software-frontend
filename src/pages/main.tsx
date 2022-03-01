@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { User } from '../interfaces/interfaces';
 import './main.css';
-import DOMPurify from 'dompurify';
+import {Outlet} from "react-router-dom";
+import GetUsers from './getUsers';
 
 export interface IMainPageProps {
     authToken: string;
@@ -34,6 +35,15 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
         await axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } }).then((response) => {
             setUserContent(response.data);
             console.log(response.data);
+            return (
+                <div className="userList">
+                    {userContent.map((user) => (
+                        <li key={user.id}>
+                            {user.id} {user.firstName} {user.lastName} {user.email}
+                        </li>
+                    ))}
+                </div>
+            );
         });
     }
 
@@ -67,7 +77,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">Mein Account</a>
+                                        <a href="main/getUsers">Mein Account</a>
                                     </li>
                                 </ul>
                             </div>
@@ -182,7 +192,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 {<hr />}
                 <div id="content-box">
                     <h1>Content</h1>
-                    <div id="display" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(`${content}`) }}></div>
+                    <div id="display"><Outlet/></div>
                 </div>
             </div>
         </div>

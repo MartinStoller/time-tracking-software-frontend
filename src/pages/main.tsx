@@ -4,8 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { User } from '../interfaces/interfaces';
 import './main.css';
-import {Outlet} from "react-router-dom";
-import GetUsers from './getUsers';
+import { Outlet, Link } from 'react-router-dom';
 
 export interface IMainPageProps {
     authToken: string;
@@ -67,12 +66,14 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
-                                        <a href="#" onClick={getUsers}>
-                                            Mitarbeiterliste
+                                        <a href="#">
+                                            <Link to="getUsers">Mein Account</Link>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="main/getUsers">Mein Account</a>
+                                        <a href="#">
+                                            <Link to="dummy">Mein Account</Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -187,7 +188,9 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 {<hr />}
                 <div id="content-box">
                     <h1>Content</h1>
-                    <div id="display"><Outlet/></div>
+                    <div id="display">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>

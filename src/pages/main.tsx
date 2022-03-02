@@ -48,6 +48,9 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
+                                        <Link to="users">Benutzerübersicht</Link>
+                                    </li>
+                                    <li>
                                         <Link to="users">Mein Account</Link>
                                     </li>
                                 </ul>

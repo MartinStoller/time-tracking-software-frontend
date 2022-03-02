@@ -21,12 +21,28 @@ const GetUsersComponent: React.FunctionComponent<testProps> = (props) => {
     }, []);
 
     return (
-        <div className="userList">
-            {users.map((user) => (
-                <li key={user.id}>
-                    {user.id} {user.firstname} {user.lastname} {user.email}
-                </li>
+        <div className="userDiv">
+            <table className='userTable'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>E-Mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                    <tr>
+                        <td key={user.id}>{user.id}</td>
+                        <td key={user.firstname}>{user.firstname}</td>
+                        <td key={user.lastname}>{user.lastname}</td>
+                        <td key={user.email}>{user.email}</td>
+                    </tr>
             ))}
+                    
+                </tbody>
+            </table>
         </div>
     );
 };

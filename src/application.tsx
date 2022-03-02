@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/login';
 import HomePage from './pages/main';
 import GetUsersComponent from './components/getUsers';
@@ -12,7 +12,21 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
         token: '', //base64 basic auth token (empty as long as loggedIn === false)
         loggedIn: false //show login page if false, else show Main.js(=Menu)
     });
-
+    if (state.loggedIn === false) {
+        return(
+        <BrowserRouter>
+            <Routes>
+                <Route path="/login" element={<LoginPage Sender={setState} />} />
+                <Route
+                    path="*"
+                    element={
+                        <Navigate to="/login" replace />
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
+        );
+    };
     return (
         <BrowserRouter>
             <Routes>
@@ -20,10 +34,12 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
                     <Route path="/users" element={<GetUsersComponent authToken={state.token} />}></Route>
                 </Route>
                 <Route path="/login" element={<LoginPage Sender={setState} />} />
+
+               {/*  Handle non existing URLs: */}
                 <Route
                     path="*"
                     element={
-                        <main style={{ padding: '1rem' }}>
+                        <main>
                             <p>There's nothing here!</p>
                         </main>
                     }

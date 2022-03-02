@@ -30,7 +30,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     function authenticate() {
         executeBasicAuthenticationService(state.emailInput, state.passwordInput)
             .then(() => props.Sender({ userEmail: state.emailInput, token: window.btoa(state.emailInput + ':' + state.passwordInput), loggedIn: true }))
-            .then(() => navigate('/main'))
+            .then(() => navigate('/'))
             .catch(() => setState({ ...state, incorrectInput: true }));
     }
 

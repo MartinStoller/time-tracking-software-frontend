@@ -2,8 +2,8 @@ import React from 'react';
 
 export interface User {
     id: string;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     password: string;
     email: string;
     role: string;

@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { User } from '../interfaces/interfaces';
+import React from 'react';
 import './main.css';
-import {Outlet} from "react-router-dom";
-import GetUsers from './getUsers';
+import { Outlet, Link} from 'react-router-dom';
 
 export interface IMainPageProps {
     authToken: string;
@@ -13,15 +8,9 @@ export interface IMainPageProps {
 }
 
 const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
-    const navigate = useNavigate();
-    const BASE_URL = `http://localhost:8080`;
     const logo = require('../assets/logo.png');
-    const token = 'Basic ' + props.authToken;
-    const users2: User[] = [];
-    const [userContent, setUserContent]: [User[], (users: User[]) => void] = useState(users2);
-    const [content, setContent] = useState('<div>OIDA2</div>');
 
-    /*     useEffect(() => { //MAYBE ALTER THIS TO BE TRIGGERED BY ANY BUTTON PRESSED AND SUBSEQUENTLY CHANGE CONTENT OF CONTENTBOX ACCORDINGLY???
+    /*     useEffect(() => { 
         //Eventhook
         if (token) {
             //Checks if name exists
@@ -29,23 +18,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
         } else {
             () => navigate('/login/err');
         }
-    }, []); //In the brackets we can define when the eventhook should be triggered, if empty it gets triggered only once in the beginning, if missing it gets triggerd every time when any event happens (I think) */
-
-    async function getUsers() {
-        await axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } }).then((response) => {
-            setUserContent(response.data);
-            console.log(response.data);
-            return (
-                <div className="userList">
-                    {userContent.map((user) => (
-                        <li key={user.id}>
-                            {user.id} {user.firstName} {user.lastName} {user.email}
-                        </li>
-                    ))}
-                </div>
-            );
-        });
-    }
+    }, []); //In the brackets we can define when the eventhook should be triggered, if empty it gets triggered only once in the beginning, if missing it gets triggerd every time when any event happens (I think)  */
 
     function testFunction() {
         setContent('<div>HELLOOOOOO2</div>');
@@ -72,12 +45,10 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
-                                        <a href="#" onClick={testFunction}>
-                                            Mitarbeiterliste
-                                        </a>
+                                        <Link to="users">Benutzerübersicht</Link>
                                     </li>
                                     <li>
-                                        <a href="main/getUsers">Mein Account</a>
+                                        <Link to="users">Mein Account</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -89,7 +60,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
-                                        <a href="#">Stunden Anzeigen</a>
+                                        <Link to="/users">Stunden Anzeigen</Link>
                                     </li>
                                     <li>
                                         <a href="#">Stunden Eintragen</a>
@@ -192,7 +163,9 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 {<hr />}
                 <div id="content-box">
                     <h1>Content</h1>
-                    <div id="display"><Outlet/></div>
+                    <div id="display">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>

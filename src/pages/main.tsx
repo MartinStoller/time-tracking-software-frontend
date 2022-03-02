@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { User } from '../interfaces/interfaces';
+import React from 'react';
 import './main.css';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link} from 'react-router-dom';
 
 export interface IMainPageProps {
     authToken: string;
@@ -12,10 +8,7 @@ export interface IMainPageProps {
 }
 
 const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
-    const navigate = useNavigate();
-    const BASE_URL = `http://localhost:8080`;
     const logo = require('../assets/logo.png');
-    const token = 'Basic ' + props.authToken;
 
     /*     useEffect(() => { 
         //Eventhook

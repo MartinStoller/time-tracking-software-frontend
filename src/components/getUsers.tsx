@@ -33,7 +33,7 @@ const GetUsersComponent: React.FunctionComponent<testProps> = (props) => {
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                    <tr>
+                    <tr key={user.id}>
                         <td key={user.id}>{user.id}</td>
                         <td key={user.firstname}>{user.firstname}</td>
                         <td key={user.lastname}>{user.lastname}</td>

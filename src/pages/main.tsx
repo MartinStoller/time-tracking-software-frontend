@@ -16,10 +16,8 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const BASE_URL = `http://localhost:8080`;
     const logo = require('../assets/logo.png');
     const token = 'Basic ' + props.authToken;
-    const users2: User[] = [];
-    const [userContent, setUserContent]: [User[], (users: User[]) => void] = useState(users2);
 
-    /*     useEffect(() => { //MAYBE ALTER THIS TO BE TRIGGERED BY ANY BUTTON PRESSED AND SUBSEQUENTLY CHANGE CONTENT OF CONTENTBOX ACCORDINGLY???
+    /*     useEffect(() => { 
         //Eventhook
         if (token) {
             //Checks if name exists
@@ -27,23 +25,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
         } else {
             () => navigate('/login/err');
         }
-    }, []); //In the brackets we can define when the eventhook should be triggered, if empty it gets triggered only once in the beginning, if missing it gets triggerd every time when any event happens (I think) */
-
-    async function getUsers() {
-        await axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } }).then((response) => {
-            setUserContent(response.data);
-            console.log(response.data);
-            return (
-                <div className="userList">
-                    {userContent.map((user) => (
-                        <li key={user.id}>
-                            {user.id} {user.firstName} {user.lastName} {user.email}
-                        </li>
-                    ))}
-                </div>
-            );
-        });
-    }
+    }, []); //In the brackets we can define when the eventhook should be triggered, if empty it gets triggered only once in the beginning, if missing it gets triggerd every time when any event happens (I think)  */
 
     return (
         <div className="main-container">
@@ -66,14 +48,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
-                                        <a href="#">
-                                            <Link to="getUsers">Mein Account</Link>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <Link to="dummy">Mein Account</Link>
-                                        </a>
+                                        <Link to="users">Mein Account</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -85,7 +60,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                             <div className="function-list">
                                 <ul>
                                     <li>
-                                        <a href="#">Stunden Anzeigen</a>
+                                        <Link to="/users">Stunden Anzeigen</Link>
                                     </li>
                                     <li>
                                         <a href="#">Stunden Eintragen</a>

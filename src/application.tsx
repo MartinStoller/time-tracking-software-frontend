@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/login';
 import HomePage from './pages/main';
-import { Dummy } from './pages/dummyFunction';
-import GetUsers from "./pages/getUsers2";
-import GetUsers99 from './pages/getUsers';
+import GetUsersComponent from './components/getUsers';
+import MainPage from './pages/main';
 
 const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
     const [state, setState] = useState({
@@ -17,10 +16,8 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/main" element={<HomePage authToken={state.token} userEmail={state.userEmail} />}>
-                    <Route path="getUsers" element={<GetUsers99 />}>
-                    </Route>
-                    <Route path="dummy" element={<Dummy />} />
+                <Route path="/" element={<MainPage authToken={state.token} userEmail={state.userEmail} />}>
+                    <Route path="/users" element={<GetUsersComponent authToken={state.token} />}></Route>
                 </Route>
                 <Route path="/login" element={<LoginPage Sender={setState} />} />
                 <Route

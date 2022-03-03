@@ -19,28 +19,26 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const [currentUser, setCurrentUser] = useState<User>();
 
     function delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
-    
+
     function getCurrentUser() {
-        axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: token } })
-        .then(response => {
+        axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: token } }).then((response) => {
             const resp = response.data;
             setCurrentUser(resp);
-        })
-        
-/*         .then(() => console.log(currentUser))
+        });
+
+        /*         .then(() => console.log(currentUser))
         .then(() => props.Sender(currentUser)) */
     }
 
     useEffect(() => {
-        getCurrentUser()
-    },[])
-    
-    useEffect(() => {
-        props.Sender(currentUser)
-    },[currentUser])
+        getCurrentUser();
+    }, []);
 
+    useEffect(() => {
+        props.Sender(currentUser);
+    }, [currentUser]);
 
     return (
         <div className="main-container">
@@ -185,6 +183,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                     </div>
                 </div>
             </div>
+            <img src={require('../assets/burns.png')} alt="" style={{ width: '20%', position: 'absolute', right: 0, bottom: 0 }} />
         </div>
     );
 };

@@ -1,28 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './main.css';
-import { Outlet, Link} from 'react-router-dom';
+import axios from 'axios';
+import { Outlet, Link } from 'react-router-dom';
+import { User } from '../interfaces/interfaces';
+import { BASE_URL } from '../globals';
+import { userInfo } from 'os';
 
 export interface IMainPageProps {
     authToken: string;
     userEmail: string;
+    Sender: Function;
+    currentUserProp: User;
 }
 
 const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const logo = require('../assets/logo.png');
+    const token = 'Basic ' + props.authToken;
+    const [currentUser, setCurrentUser] = useState<User>();
 
-    /*     useEffect(() => { 
-        //Eventhook
-        if (token) {
-            //Checks if name exists
-            setContent(`Hello, ${token}`);
-        } else {
-            () => navigate('/login/err');
-        }
-    }, []); //In the brackets we can define when the eventhook should be triggered, if empty it gets triggered only once in the beginning, if missing it gets triggerd every time when any event happens (I think)  */
-
-    function testFunction() {
-        setContent('<div>HELLOOOOOO2</div>');
+    function delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
+    
+    function getCurrentUser() {
+        axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: token } })
+        .then(response => {
+            const resp = response.data;
+            setCurrentUser(resp);
+        })
+        
+/*         .then(() => console.log(currentUser))
+        .then(() => props.Sender(currentUser)) */
+    }
+
+    useEffect(() => {
+        getCurrentUser()
+    },[])
+    
+    useEffect(() => {
+        props.Sender(currentUser)
+    },[currentUser])
+
 
     return (
         <div className="main-container">
@@ -48,7 +66,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                                         <Link to="users">Benutzerübersicht</Link>
                                     </li>
                                     <li>
-                                        <Link to="users">Mein Account</Link>
+                                        <Link to="current-user">Mein Account</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -162,7 +180,6 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 </div>
                 {<hr />}
                 <div id="content-box">
-                    <h1>Content</h1>
                     <div id="display">
                         <Outlet />
                     </div>

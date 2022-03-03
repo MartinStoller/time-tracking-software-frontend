@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../globals';
 import './login.css';
 
 export interface ILoginPageProps {
@@ -10,7 +11,6 @@ export interface ILoginPageProps {
 
 const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     const logo = require('../assets/logo.png');
-    const BASE_URL = `http://localhost:8080`;
     const [state, setState] = useState({
         emailInput: '',
         passwordInput: '',
@@ -20,7 +20,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     const navigate = useNavigate();
 
     function executeBasicAuthenticationService(username: string, password: string) {
-        return axios.get(`${BASE_URL}/basicauth`, { headers: { authorization: createBasicAuthToken(username, password) } });
+        return axios.get(`${BASE_URL}/login`, { headers: { authorization: createBasicAuthToken(username, password) } });
     }
 
     function createBasicAuthToken(username: string, password: string) {

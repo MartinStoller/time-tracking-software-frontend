@@ -180,10 +180,10 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 <div id="content-box">
                     <div id="display">
                         <Outlet />
+                        <img id="burns" src={require('../assets/burns.png')} alt="" style={{ position: 'absolute', borderRadius: '1.7vh', right: 0, bottom: 0 }} />
                     </div>
                 </div>
             </div>
-            <img src={require('../assets/burns.png')} alt="" style={{ width: '20%', position: 'absolute', right: 0, bottom: 0 }} />
         </div>
     );
 };

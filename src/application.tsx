@@ -37,7 +37,7 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
                     path="*"
                     element={
                         <main style={{ padding: '1rem' }}>
-                            <p>There's nothing here!</p>
+                            <p style={{ color:"white", fontWeight:700 }}>There's nothing here!</p>
                         </main>
                     }
                 />

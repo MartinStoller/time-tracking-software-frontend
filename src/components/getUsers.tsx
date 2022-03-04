@@ -22,6 +22,8 @@ const GetUsersComponent: React.FunctionComponent<testProps> = (props) => {
 
     return (
         <div className="userDiv">
+            <h1>Benutzerübersicht</h1>
+            <br />
             <table className="userTable">
                 <thead>
                     <tr>

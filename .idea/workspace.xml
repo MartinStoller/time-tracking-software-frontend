@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fb30fb71-74a4-4308-bee9-f100e1696a34" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/application.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/application.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/getUsers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/getUsers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/interfaces.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/interfaces.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/main.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="25piiGh92Vf0uiFLxf3NwP6l5LS" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb30fb71-74a4-4308-bee9-f100e1696a34" name="Default Changelist" comment="" />
+      <created>1646230556562</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1646230556562</updated>
+    </task>
+    <servers />
+  </component>
+</project>

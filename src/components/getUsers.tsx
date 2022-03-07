@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { User } from '../interfaces/interfaces';
+import {BASE_URL} from "../globals"
 
-export interface testProps {
+export interface authenticationProps {
     authToken: string;
 }
 
-const GetUsersComponent: React.FunctionComponent<testProps> = (props) => {
+const GetUsersComponent: React.FunctionComponent<authenticationProps> = (props) => {
     const token = 'Basic ' + props.authToken;
     const [users, setUsers] = useState<User[]>([]);
     async function getAllUsers() {
         //Not sure if async - await is needed
-        const BASE_URL = `http://localhost:8080`;
         await axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } }).then((response) => {
             setUsers(response.data);
         });
@@ -21,7 +21,8 @@ const GetUsersComponent: React.FunctionComponent<testProps> = (props) => {
     }, []);
 
     return (
-        <div className="userDiv">
+        <>
+        <h1>Benutzerübersicht</h1>
             <table className='userTable'>
                 <thead>
                     <tr>
@@ -34,16 +35,16 @@ const GetUsersComponent: React.FunctionComponent<testProps> = (props) => {
                 <tbody>
                     {users.map((user) => (
                     <tr key={user.id}>
-                        <td key={user.id}>{user.id}</td>
-                        <td key={user.firstname}>{user.firstname}</td>
-                        <td key={user.lastname}>{user.lastname}</td>
-                        <td key={user.email}>{user.email}</td>
+                        <td>{user.id}</td>
+                        <td>{user.firstname}</td>
+                        <td>{user.lastname}</td>
+                        <td>{user.email}</td>
                     </tr>
             ))}
                     
                 </tbody>
             </table>
-        </div>
+        </>
     );
 };
 

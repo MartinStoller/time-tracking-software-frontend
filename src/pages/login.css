@@ -62,7 +62,7 @@ input:focus {
     outline: none;
     background-color: var(--color-input_bgfocus);
 }
-#loginButton {
+.loginButton, .submitButton {
     transition-duration: 0.25s;
     font-size: 3vh;
     border: 1px solid black;
@@ -70,10 +70,10 @@ input:focus {
     padding: 0.6vh 2.375vh;
     background-color: var(--color-success);
 }
-#loginButton:hover:enabled {
+.loginButton:hover:enabled, .submitButton:hover:enabled {
     background-color: #13940a;
     color: white;
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.17);
 }
 button:disabled {
     color: #333;

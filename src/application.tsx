@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/login';
-import HomePage from './pages/main';
+import SickDayRegistry from './components/sickDayRegistry';
 import GetUsersComponent from './components/getUsers';
 import MainPage from './pages/main';
 
@@ -32,9 +32,9 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
             <Routes>
                 <Route path="/" element={<MainPage authToken={state.token} userEmail={state.userEmail} />}>
                     <Route path="/users" element={<GetUsersComponent authToken={state.token} />}></Route>
+                    <Route path="/sickDayRegistry" element={<SickDayRegistry authToken={state.token} />}></Route>
                 </Route>
                 <Route path="/login" element={<LoginPage Sender={setState} />} />
-
                {/*  Handle non existing URLs: */}
                 <Route
                     path="*"

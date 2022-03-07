@@ -20,7 +20,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     const navigate = useNavigate();
 
     function executeBasicAuthenticationService(username: string, password: string) {
-        return axios.get(`${BASE_URL}/basicauth`, { headers: { authorization: createBasicAuthToken(username, password) } });
+        return axios.get(`${BASE_URL}/login`, { headers: { authorization: createBasicAuthToken(username, password) } });
     }
 
     function createBasicAuthToken(username: string, password: string) {
@@ -78,7 +78,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     onKeyUp={enableDisableButton}
                 />
                 <br />
-                <button id="loginButton" onClick={authenticate}>
+                <button className="loginButton" onClick={authenticate}>
                     Anmelden
                 </button>
                 <h5 id={state.incorrectInput ? 'login-error-message' : 'hidden-message'}>Ungültige Benutzername/Passwort-Kombination.</h5>

@@ -125,7 +125,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                                         <a href="#">Krankheitstage</a>
                                     </li>
                                     <li>
-                                        <a href="#">Krankmeldung</a>
+                                        <Link to="sickDayRegistry">Krankmeldung</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -158,7 +158,6 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                 </div>
                 {<hr />}
                 <div id="content-box">
-                    <h1>Content</h1>
                     <div id="display">
                         <Outlet />
                     </div>

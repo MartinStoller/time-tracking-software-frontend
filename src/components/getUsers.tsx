@@ -14,6 +14,7 @@ const GetUsersComponent: React.FunctionComponent<authenticationProps> = (props) 
         //Not sure if async - await is needed
         await axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } }).then((response) => {
             setUsers(response.data);
+            console.log(response.data)
         });
     }
     useEffect(() => {
@@ -23,6 +24,7 @@ const GetUsersComponent: React.FunctionComponent<authenticationProps> = (props) 
     return (
         <>
         <h1>Benutzerübersicht</h1>
+        <br />
             <table className='userTable'>
                 <thead>
                     <tr>

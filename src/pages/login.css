@@ -62,7 +62,7 @@ input:focus {
     outline: none;
     background-color: var(--color-input_bgfocus);
 }
-.loginButton, .submitButton {
+#loginButton, #submitButton {
     transition-duration: 0.25s;
     font-size: 3vh;
     border: 1px solid black;

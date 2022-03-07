@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
+import { BASE_URL } from '../globals';
 
 export interface ILoginPageProps {
     Sender: Function;
@@ -10,14 +10,16 @@ export interface ILoginPageProps {
 
 const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     const logo = require('../assets/logo.png');
-    const BASE_URL = `http://localhost:8080`;
+    const navigate = useNavigate();
     const [state, setState] = useState({
         emailInput: '',
         passwordInput: '',
         incorrectInput: false // if true, wrong user details were submitted and an error message shows up
     });
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        enableDisableButton()
+    }, [state])
 
     function executeBasicAuthenticationService(username: string, password: string) {
         return axios.get(`${BASE_URL}/login`, { headers: { authorization: createBasicAuthToken(username, password) } });
@@ -56,7 +58,6 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     <img width="100%" src={logo} alt="Haeger Logo" />
                 </a>
             </div>
-
             <div className="login-box">
                 <h1>Willkommen zu Haegertime</h1>
                 <input
@@ -66,7 +67,6 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     value={state.emailInput}
                     onChange={(event) => setState({ ...state, emailInput: event.target.value })}
                     onKeyPress={startLoginWhenEnterKeyPressed}
-                    onKeyUp={enableDisableButton}
                 />
                 <br />
                 <input
@@ -75,10 +75,9 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     value={state.passwordInput}
                     onChange={(event) => setState({ ...state, passwordInput: event.target.value })}
                     onKeyPress={startLoginWhenEnterKeyPressed}
-                    onKeyUp={enableDisableButton}
                 />
                 <br />
-                <button className="loginButton" onClick={authenticate}>
+                <button id="loginButton" onClick={authenticate} disabled>
                     Anmelden
                 </button>
                 <h5 id={state.incorrectInput ? 'login-error-message' : 'hidden-message'}>Ungültige Benutzername/Passwort-Kombination.</h5>

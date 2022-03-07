@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {BASE_URL} from "../globals"
-
 export interface sickDayRegistryProps {
     authToken: string;
 }
-
 const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) => {
     const token = 'Basic ' + props.authToken;
-
-function createSickDay() {
-        axios.post(`${BASE_URL}/api/timeTableDays`, 
+    function createSickDay() {
+        axios.post(`${BASE_URL}/api/timeTableDays`,
         {
             date: "2022-01-25",
             startTime: "08:45:00",
@@ -19,10 +16,9 @@ function createSickDay() {
             expectedHours: 0.0,
             absenceStatus: null
             },
-        { headers: { authorization: token }}, 
+        { headers: { authorization: token }},
         ).then((response) => console.log(response.data))
     }
-
     return(
     <>
         <h1>Krankmeldung</h1>
@@ -33,6 +29,4 @@ function createSickDay() {
         <button className="submitButton" onClick={createSickDay}>Abschließen</button>
     </>);
 }
-
-
 export default SickDayRegistry;

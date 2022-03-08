@@ -44,6 +44,10 @@ body {
     margin: 3vh;
     color: var(--color-error);
 }
+#success-message {
+    margin: 3vh;
+    color: var(--color-success);
+}
 h1 {
     font-size: 3vh;
 }
@@ -62,7 +66,7 @@ input:focus {
     outline: none;
     background-color: var(--color-input_bgfocus);
 }
-#loginButton, #submitButton {
+#loginButton, .submitButton {
     transition-duration: 0.25s;
     font-size: 3vh;
     border: 1px solid black;
@@ -70,12 +74,16 @@ input:focus {
     padding: 0.6vh 2.375vh;
     background-color: var(--color-success);
 }
-.loginButton:hover:enabled, .submitButton:hover:enabled {
+.loginButton:hover:enabled {
     background-color: #13940a;
     color: white;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.17);
 }
-button:disabled {
+input:disabled {
+    color: #333;
+    background-color: #aaa;
+}
+.loginbutton:disabled {
     color: #333;
     background-color: #aaa;
 }

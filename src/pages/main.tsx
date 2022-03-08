@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
 import { User } from '../interfaces/interfaces';
 import { BASE_URL } from '../globals';
+import { useCookies } from '@react-smart/react-cookie-service';
 
 export interface IMainPageProps {
     authToken: string;
@@ -11,19 +12,16 @@ export interface IMainPageProps {
     Sender: Function;
 }
 
+
 const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const logo = require('../assets/logo.png');
     const token = 'Basic ' + props.authToken;
     const [currentUser, setCurrentUser] = useState<User>();
-
-    function delay(ms: number) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-    }
+    const { setCookie, getCookie, deleteAllCookies} = useCookies(); 
 
     function getCurrentUser() {
         axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: token } }).then((response) => {
-            const resp = response.data;
-            setCurrentUser(resp);
+            setCurrentUser(response.data);
         });
     }
 
@@ -31,10 +29,20 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
         getCurrentUser();
     }, []);
 
-    useEffect(() => {
+/*     useEffect(() => {
         props.Sender(currentUser);
-    }, [currentUser]);
+    }, [currentUser]); */
 
+    
+/*     useEffect(() => {
+        if (currentUser)
+        setCookie('basicAuthToken', token, {expires: 1});
+        setCookie("currentUserEmail", currentUser?.email || "")
+        console.log(`BasicAuthCookie was set to ${getCookie('basicAuthToken')}`)
+        console.log(`currentUserCookie was set to ${getCookie("currentUserEmail")}`)
+        }  
+    , [currentUser]); */
+        console.log("dsadassSSSSSSSSSSSSS")
     return (
         <div className="main-container">
             <link rel="stylesheet" href="./main.css" />
@@ -140,7 +148,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                                         <a href="#">Krankheitstage</a>
                                     </li>
                                     <li>
-                                        <Link to="sickDayRegistry">Urlaubsantrag</Link>
+                                        <Link to="sickDayRegistry">Krankmeldung</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -169,7 +177,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                     </div>
                     {/* /menu */}
                     <div id="copyright">&copy; 2022 Team React</div>
-                    <button id="logoutButton">Abmelden</button>
+                    <button id="logoutButton" onClick={() => deleteAllCookies()}>Abmelden</button>
                 </div>
                 {<hr />}
                 <div id="content-box">

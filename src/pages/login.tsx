@@ -77,7 +77,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     onKeyPress={startLoginWhenEnterKeyPressed}
                 />
                 <br />
-                <button id="loginButton" onClick={authenticate} disabled>
+                <button id="loginButton" onClick={authenticate}>
                     Anmelden
                 </button>
                 <h5 id={state.incorrectInput ? 'login-error-message' : 'hidden-message'}>Ungültige Benutzername/Passwort-Kombination.</h5>

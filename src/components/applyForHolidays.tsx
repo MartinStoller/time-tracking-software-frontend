@@ -40,7 +40,7 @@ const HolidayApplicationComponent: React.FunctionComponent<holidayApplicationPro
         <br />
         <input type="date" placeholder='Startdatum'/>
         <input type="text" placeholder='Wie viele Urlaubstage?'/>
-        <button className='submitButton'></button> {/* TODO: ADD ON CLICK FUNCTIONALITY */}
+        <button className="formButtonGreen">Abschließen</button> {/* TODO: ADD ON CLICK FUNCTIONALITY */}
         </>
     );
 };

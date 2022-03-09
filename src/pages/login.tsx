@@ -35,7 +35,6 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     function authenticate() {
         executeBasicAuthenticationService(state.emailInput, state.passwordInput)
             .then(() => setState({...state, successfulAuth: true}))
-            .then(() => props.Sender({ userEmail: state.emailInput, loggedIn: true }))
             .catch(() => setState({ ...state, incorrectInput: true }));
     }
 
@@ -57,7 +56,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
         if (state.successfulAuth === true){
             setCookie('basicAuthToken', createBasicAuthToken(state.emailInput, state.passwordInput), {expires: 1});
             console.log(`BasicAuthCookie was set to ${getCookie('basicAuthToken')}`);
-            props.Sender({ userEmail: state.emailInput, token: createBasicAuthToken(state.emailInput, state.passwordInput), loggedIn: true })
+            props.Sender({ userEmail: state.emailInput, loggedIn: true })
             axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: getCookie("basicAuthToken") } })
                 .then((response) => {props.SetAppCurrentUser(response.data)})
                 .catch(() => setState({ ...state, incorrectInput: true }));

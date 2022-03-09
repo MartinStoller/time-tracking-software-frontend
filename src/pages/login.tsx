@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.css';
 import { BASE_URL } from '../globals';
+import { useCookies } from '@react-smart/react-cookie-service';
+
 
 export interface ILoginPageProps {
     Sender: Function;
+    SetAppCurrentUser: Function;
 }
 
 const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     const logo = require('../assets/logo.png');
-    const navigate = useNavigate();
     const [state, setState] = useState({
         emailInput: '',
         passwordInput: '',
-        incorrectInput: false // if true, wrong user details were submitted and an error message shows up
+        incorrectInput: false, // if true, wrong user details were submitted and an error message shows up
+        successfulAuth: false // true when auth was succesful so we knwo we want to set cookies now
     });
+    const { setCookie, getCookie} = useCookies(); 
 
     useEffect(() => {
         enableDisableButton()
@@ -31,8 +34,8 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
 
     function authenticate() {
         executeBasicAuthenticationService(state.emailInput, state.passwordInput)
-            .then(() => props.Sender({ userEmail: state.emailInput, token: window.btoa(state.emailInput + ':' + state.passwordInput), loggedIn: true }))
-            .then(() => navigate('/'))
+            .then(() => setState({...state, successfulAuth: true}))
+            .then(() => props.Sender({ userEmail: state.emailInput, loggedIn: true }))
             .catch(() => setState({ ...state, incorrectInput: true }));
     }
 
@@ -49,6 +52,19 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
             authenticate();
         }
     }
+
+    useEffect(() => {
+        if (state.successfulAuth === true){
+            setCookie('basicAuthToken', createBasicAuthToken(state.emailInput, state.passwordInput), {expires: 1});
+            console.log(`BasicAuthCookie was set to ${getCookie('basicAuthToken')}`);
+            props.Sender({ userEmail: state.emailInput, token: createBasicAuthToken(state.emailInput, state.passwordInput), loggedIn: true })
+            axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: getCookie("basicAuthToken") } })
+                .then((response) => {props.SetAppCurrentUser(response.data)})
+                .catch(() => setState({ ...state, incorrectInput: true }));
+
+        }
+        }  
+    , [state.successfulAuth]);
 
     return (
         <div className="login-container">

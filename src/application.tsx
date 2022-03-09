@@ -10,7 +10,6 @@ import MyAccountComponent from './components/myAccount';
 import { useCookies } from '@react-smart/react-cookie-service';
 import { BASE_URL } from './globals';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
     const [state, setState] = useState({
@@ -28,49 +27,54 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
             role: "",
             frozen: true,
             urlaubstage: ""
-})
+    });
 
-    const { setCookie, getCookie} = useCookies();
+    const { getCookie } = useCookies();
 
-/*     useEffect(() => {
+    useEffect(() => {
         console.log(`reading authcookie: ${getCookie("basicAuthToken")}`);
-        axios.get(`${BASE_URL}/login`, { headers: { authorization: getCookie("basicAuthToken") } })
-        .then(() => setState({userEmail: getCookie("currentUserEmail"), token: getCookie("basicAuthToken"), loggedIn: true}))
-        .then(() => console.log(state))
-
-        .catch(() => {setState({...state, loggedIn: false}); console.log("sdadsadasdsa")});
+        if (getCookie("basicAuthToken")){
+            axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: getCookie("basicAuthToken") } })
+                .then((response) => {
+                    setCurrentUser(response.data)
+                    setState({...state, loggedIn: true}); //TODO: setting token will be depricated
+                    console.log(`successfully authenticated with token ${state.token}`);
+                    console.log(state)
+            }).catch(() => {
+                    setState({...state, loggedIn: false}); 
+                    console.log("AAAAAAAAAHHHHHHH !!!")});
+        }
         }  
-    , []); */
+        , []);
 
-/*     useEffect(() => {}, [state.loggedIn]) */
+        useEffect(() => {console.log(`loggedIn: ${state.loggedIn}`) }, [state.loggedIn])
+        
     if (state.loggedIn === false) {
-        console.log(`im false router ${state.loggedIn}`)
         return(
-        <BrowserRouter>
-            <Routes>
-                <Route path="/login" element={<LoginPage Sender={setState} />} />
-                <Route
-                    path="*"
-                    element={
-                        <Navigate to="/login" replace />
-                    }
-                />
-            </Routes>
-        </BrowserRouter>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/login" element={<LoginPage Sender={setState} SetAppCurrentUser={setCurrentUser} />} />
+                    <Route
+                        path="*"
+                        element={
+                            <Navigate to="/login" replace />
+                        }
+                    />
+                </Routes>
+            </BrowserRouter>
         );
     };
-    console.log(`Im Router zwischen den beiden returns ${state.loggedIn}`)
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainPage authToken={state.token} userEmail={state.userEmail} Sender={setCurrentUser}/>}>
+                <Route path="/" element={<MainPage userEmail={state.userEmail} Sender={setCurrentUser}/>}>
                     <Route path="/users" element={<GetUsersComponent authToken={state.token} />}></Route>
                     <Route path="/ownHolidays" element={<OwnHolidaysDisplay authToken={state.token} currentUser={currentUser}/>}></Route>
-                    <Route path="/holidayApplication" element={<HolidayApplicationComponent authToken={state.token} currentUser={currentUser}/>}></Route>
+                    <Route path="/holidayApplication" element={<HolidayApplicationComponent currentUser={currentUser}/>}></Route>
                     <Route path="/sickDayRegistry" element={<SickDayRegistry authToken={state.token}/>}></Route>
-                    <Route path="/current-user" element={<MyAccountComponent authToken={state.token} currentUser={currentUser}/>}></Route>
+                    <Route path="/current-user" element={<MyAccountComponent currentUser={currentUser}/>}></Route>
                 </Route>
-                <Route path="/login" element={<Navigate to="/login" replace />} />
+                <Route path="/login" element={<Navigate to="/" replace />} />
                {/*  Handle non existing URLs: */}
                 <Route
                     path="*"
@@ -83,6 +87,7 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
             </Routes>
         </BrowserRouter>
     );
+    
 };
 
 export default HaegertimeApplication;

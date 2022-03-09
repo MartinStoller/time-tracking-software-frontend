@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {BASE_URL} from "../globals"
-import {User} from "../interfaces/interfaces"
+import {BASE_URL} from "../globals";
+import {User} from "../interfaces/interfaces";
+import { useNavigate } from 'react-router-dom';
 
 export interface sickDayRegistryProps {
     authToken: string;
@@ -9,6 +10,7 @@ export interface sickDayRegistryProps {
 
 const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) => {
     const token = 'Basic ' + props.authToken;
+    const navigate = useNavigate();
     const [state, setState] = useState(
         {
             email: "", //Whatever is typed in Inputfield "email"
@@ -23,13 +25,12 @@ const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) =
     );
 
     function getAllUsers() {
-            //Not sure if async - await is needed
-            axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } })
-            .then((response) => {
-                console.log(response.data);
-                setState({...state, users: response.data})
-            })
-        }
+        axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } })
+        .then((response) => {
+            console.log(response.data);
+            setState({...state, users: response.data})
+        })
+    }
     
     function getEmailList(){
         let emails: string[] = [];

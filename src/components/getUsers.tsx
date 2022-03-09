@@ -2,20 +2,23 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { User } from '../interfaces/interfaces';
 import {BASE_URL} from "../globals"
+import { useCookies } from '@react-smart/react-cookie-service';
 
 export interface authenticationProps {
     authToken: string;
 }
 
+
 const GetUsersComponent: React.FunctionComponent<authenticationProps> = (props) => {
+    const { getCookie } = useCookies(); 
     const token = 'Basic ' + props.authToken;
     const [users, setUsers] = useState<User[]>([]);
-    async function getAllUsers() {
-        //Not sure if async - await is needed
-        await axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } }).then((response) => {
+    function getAllUsers() {
+        console.log(token)
+        axios.get(`${BASE_URL}/api/users`, { headers: { authorization: getCookie("basicAuthToken") } }).then((response) => {
             setUsers(response.data);
             console.log(response.data)
-        });
+        })
     }
     useEffect(() => {
         getAllUsers();

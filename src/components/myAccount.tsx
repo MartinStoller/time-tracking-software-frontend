@@ -3,7 +3,6 @@ import axios from 'axios';
 import { User } from '../interfaces/interfaces';
 import { BASE_URL } from '../globals';
 export interface myAccountProps {
-    authToken: string;
     currentUser: User
 }
 const MyAccountComponent: React.FunctionComponent<myAccountProps> = (props) => {

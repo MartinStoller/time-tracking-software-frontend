@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { User, TimeTableDay } from '../interfaces/interfaces';
 import { BASE_URL } from '../globals';
+import { useCookies } from '@react-smart/react-cookie-service';
 
 export interface ownHolidaysDisplayProps {
-    authToken: string;
     currentUser: User
 }
 const OwnHolidaysDisplay: React.FunctionComponent<ownHolidaysDisplayProps> = (props) => {
-    const token = 'Basic ' + props.authToken;
     const [remainingHolidays, setRemainingHolidays] = useState();
     const [pastHolidays, setPastHolidays] = useState<TimeTableDay[]>([]);
+    const { getCookie } = useCookies(); 
 
     function getHolidayData() {
-        axios.get(`${BASE_URL}/api/users/holidays/rest`, { headers: { authorization: token } }).then((response) => {
+        axios.get(`${BASE_URL}/api/users/holidays/rest`, { headers: { authorization: getCookie("basicAuthToken") } }).then((response) => {
             setRemainingHolidays(response.data);
         });
-        axios.get(`${BASE_URL}/api/users/holidays`, { headers: { authorization: token } }).then((response) => {
+        axios.get(`${BASE_URL}/api/users/holidays`, { headers: { authorization: getCookie("basicAuthToken") } }).then((response) => {
             setPastHolidays(response.data);
         });
     }

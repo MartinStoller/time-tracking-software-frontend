@@ -5,13 +5,8 @@ import {User} from "../interfaces/interfaces";
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from '@react-smart/react-cookie-service';
 
-export interface sickDayRegistryProps {
-    authToken: string;
-}
-
-const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) => {
+const SickDayRegistry: React.FunctionComponent<{}> = (props) => {
     const { getCookie } = useCookies(); 
-    const navigate = useNavigate();
     const [state, setState] = useState(
         {
             email: "", //Whatever is typed in Inputfield "email"

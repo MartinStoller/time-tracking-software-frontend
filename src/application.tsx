@@ -14,7 +14,6 @@ import axios from 'axios';
 const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
     const [state, setState] = useState({
         userEmail: '', //empty string if logged in is false, else email of logged-in user
-        token: '', //base64 basic auth token (empty as long as loggedIn === false)
         loggedIn: false, //show login page if false, else show Main.js(=Menu)
     });
 
@@ -37,9 +36,7 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
             axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: getCookie("basicAuthToken") } })
                 .then((response) => {
                     setCurrentUser(response.data)
-                    setState({...state, loggedIn: true}); //TODO: setting token will be depricated
-                    console.log(`successfully authenticated with token ${state.token}`);
-                    console.log(state)
+                    setState({...state, loggedIn: true}); 
             }).catch(() => {
                     setState({...state, loggedIn: false}); 
                     console.log("AAAAAAAAAHHHHHHH !!!")});
@@ -68,10 +65,10 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage userEmail={state.userEmail} Sender={setCurrentUser}/>}>
-                    <Route path="/users" element={<GetUsersComponent authToken={state.token} />}></Route>
-                    <Route path="/ownHolidays" element={<OwnHolidaysDisplay authToken={state.token} currentUser={currentUser}/>}></Route>
+                    <Route path="/users" element={<GetUsersComponent />}></Route>
+                    <Route path="/ownHolidays" element={<OwnHolidaysDisplay currentUser={currentUser}/>}></Route>
                     <Route path="/holidayApplication" element={<HolidayApplicationComponent currentUser={currentUser}/>}></Route>
-                    <Route path="/sickDayRegistry" element={<SickDayRegistry authToken={state.token}/>}></Route>
+                    <Route path="/sickDayRegistry" element={<SickDayRegistry/>}></Route>
                     <Route path="/current-user" element={<MyAccountComponent currentUser={currentUser}/>}></Route>
                 </Route>
                 <Route path="/login" element={<Navigate to="/" replace />} />

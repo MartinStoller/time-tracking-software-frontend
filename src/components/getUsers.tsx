@@ -4,17 +4,10 @@ import { User } from '../interfaces/interfaces';
 import {BASE_URL} from "../globals"
 import { useCookies } from '@react-smart/react-cookie-service';
 
-export interface authenticationProps {
-    authToken: string;
-}
-
-
-const GetUsersComponent: React.FunctionComponent<authenticationProps> = (props) => {
+const GetUsersComponent: React.FunctionComponent<{}> = (props) => {
     const { getCookie } = useCookies(); 
-    const token = 'Basic ' + props.authToken;
     const [users, setUsers] = useState<User[]>([]);
     function getAllUsers() {
-        console.log(token)
         axios.get(`${BASE_URL}/api/users`, { headers: { authorization: getCookie("basicAuthToken") } }).then((response) => {
             setUsers(response.data);
             console.log(response.data)

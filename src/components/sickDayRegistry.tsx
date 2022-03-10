@@ -3,13 +3,14 @@ import axios from 'axios';
 import {BASE_URL} from "../globals";
 import {User} from "../interfaces/interfaces";
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from '@react-smart/react-cookie-service';
 
 export interface sickDayRegistryProps {
     authToken: string;
 }
 
 const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) => {
-    const token = 'Basic ' + props.authToken;
+    const { getCookie } = useCookies(); 
     const navigate = useNavigate();
     const [state, setState] = useState(
         {
@@ -17,15 +18,15 @@ const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) =
             date: "", //date picked in datepicker
             employeeId: "", // Once a correct email was entered, an API request will look for the corresponding User-Id.
             dayId: "", // Id of created TimeTableDay (needed to link Employee to that day)
-            successfulEmployeeAssignment: false, 
-            errorOccured: false, 
+            successfulEmployeeAssignment: false, //if true show success message
+            errorOccured: false, //if true show error message
             users: [] as User[], //list of all Users (needed for autocompletion of typed in E-Mail).  
             userEmails: [] as string[] //List of all UserEmails(needed for autocompletion of typed in E-Mail)
         }
     );
 
     function getAllUsers() {
-        axios.get(`${BASE_URL}/api/users`, { headers: { authorization: token } })
+        axios.get(`${BASE_URL}/api/users`, { headers: { authorization: getCookie("basicAuthToken") } })
         .then((response) => {
             console.log(response.data);
             setState({...state, users: response.data})
@@ -48,7 +49,7 @@ const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) =
             expectedHours: 8.0,
             absenceStatus: "SICK"
             },
-        { headers: { authorization: token }},
+        { headers: { authorization: getCookie("basicAuthToken") }},
         ).then((response) => {
             setState({...state, dayId: response.data.workdayId});
         })
@@ -61,12 +62,16 @@ const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) =
         }
 
     function assignEmployeeToDay(){
-        console.log(state.dayId)
         axios.put(`${BASE_URL}/api/timeTableDays/assignEmployee/${state.employeeId}/toDay/${state.dayId}`, null, 
-        { headers: { authorization: token }},
+        { headers: { authorization: getCookie("basicAuthToken") }},
         ).then(() => setState({...state, successfulEmployeeAssignment: true, errorOccured: false}))
+        .then(() => {setState({...state, successfulEmployeeAssignment: true})})
         .catch(() => setState({...state, errorOccured: true, successfulEmployeeAssignment: false}))
     }
+
+    let clearInputfields = () => { 
+            setState({...state, email: "", employeeId: "", date:"", dayId: ""});
+        } 
 
     useEffect(() => {
             getAllUsers();
@@ -85,17 +90,19 @@ const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) =
     , [state.users]);
 
     useEffect(() => {
-    if(state.dayId != "" && state.employeeId != ""){
-        assignEmployeeToDay();
-        setState({...state, email:""})
-    }
+        if(state.dayId != "" && state.employeeId != ""){
+            assignEmployeeToDay();
+        }
     }, [state.dayId]);
+
+    useEffect(() => {
+        clearInputfields()
+    }, [state.successfulEmployeeAssignment]);
 
     return(
     <div>
         <h1>Krankmeldung</h1>
         <h3> Um Welchen Mitarbeiter und welchen Tag handelt es sich? Bitte geben Sie die nötigen Details ein.</h3>
-        <form>
             <input type="text" name="email" list = "emails" placeholder="Benutzer E-Mail" value = {state.email} onChange={(event) => setState({ ...state, email: event.target.value })} />
                 <datalist id="emails">
                     {state.users.map((user) => (
@@ -107,8 +114,6 @@ const SickDayRegistry: React.FunctionComponent<sickDayRegistryProps> = (props) =
             <input type="date" name="date" value={state.date} onChange={(event) => setState({ ...state, date: event.target.value })}/>
             <br />
             <button className="formButtonGreen" onClick={createSickDay}>Abschließen</button>
-        </form>
-
         <br /><br />
         <h4 id={state.errorOccured ? 'login-error-message' : 'hidden-message'}>"Der Computer sagt Nein! Da hat etwas nicht funktioniert."</h4>
         <h4 id={state.successfulEmployeeAssignment ? 'success-message' : 'hidden-message'}>"Krankheitstag erfolgreich eingetragen!"</h4>

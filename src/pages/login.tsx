@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../globals';
 import './login.css';
-import { BASE_URL } from '../globals';
 import { useCookies } from '@react-smart/react-cookie-service';
 
-
 export interface ILoginPageProps {
-    Sender: Function;
+    loggedInSender: Function;
+    userEmailSender: Function;
     SetAppCurrentUser: Function;
 }
 
@@ -57,7 +56,8 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
         if (state.successfulAuth === true){
             setCookie('basicAuthToken', createBasicAuthToken(state.emailInput, state.passwordInput), {expires: 1});
             console.log(`BasicAuthCookie was set to ${getCookie('basicAuthToken')}`);
-            props.Sender({ userEmail: state.emailInput, loggedIn: true })
+            props.loggedInSender(true);
+            props.userEmailSender(state.emailInput)
             axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: getCookie("basicAuthToken") } })
                 .then((response) => {props.SetAppCurrentUser(response.data)})
                 .catch(() => setState({ ...state, incorrectInput: true }));
@@ -66,6 +66,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
         }  
     , [state.successfulAuth]);
 
+    useEffect(() => {console.log(state.incorrectInput)}, [state.incorrectInput])
     return (
         <div className="login-container">
             <link rel="stylesheet" href="./login.css" />
@@ -93,7 +94,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     onKeyPress={startLoginWhenEnterKeyPressed}
                 />
                 <br />
-                <button className="formButtonGreen" onClick={authenticate}>
+                <button className="formButtonGreen" id="loginButton" onClick={authenticate}>
                     Anmelden
                 </button>
                 <h5 id={state.incorrectInput ? 'login-error-message' : 'hidden-message'}>Ungültige Benutzername/Passwort-Kombination.</h5>

@@ -12,10 +12,8 @@ import { BASE_URL } from './globals';
 import axios from 'axios';
 
 const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
-    const [state, setState] = useState({
-        userEmail: '', //empty string if logged in is false, else email of logged-in user
-        loggedIn: false, //show login page if false, else show Main.js(=Menu)
-    });
+    const [userEmail, setUserEmail] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const [currentUser, setCurrentUser] = useState({
             id: "",
@@ -36,21 +34,19 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
             axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: getCookie("basicAuthToken") } })
                 .then((response) => {
                     setCurrentUser(response.data)
-                    setState({...state, loggedIn: true}); 
+                    setLoggedIn(true); 
             }).catch(() => {
-                    setState({...state, loggedIn: false}); 
+                    setLoggedIn(false); 
                     console.log("AAAAAAAAAHHHHHHH !!!")});
         }
         }  
         , []);
-
-        useEffect(() => {console.log(`loggedIn: ${state.loggedIn}`) }, [state.loggedIn])
         
-    if (state.loggedIn === false) {
+    if (loggedIn === false) {
         return(
             <BrowserRouter>
                 <Routes>
-                    <Route path="/login" element={<LoginPage Sender={setState} SetAppCurrentUser={setCurrentUser} />} />
+                    <Route path="/login" element={<LoginPage loggedInSender={setLoggedIn} userEmailSender={setUserEmail} SetAppCurrentUser={setCurrentUser} />} />
                     <Route
                         path="*"
                         element={
@@ -64,7 +60,7 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainPage userEmail={state.userEmail} Sender={setCurrentUser}/>}>
+                <Route path="/" element={<MainPage userEmail={userEmail} Sender={setCurrentUser}/>}>
                     <Route path="/users" element={<GetUsersComponent />}></Route>
                     <Route path="/ownHolidays" element={<OwnHolidaysDisplay currentUser={currentUser}/>}></Route>
                     <Route path="/holidayApplication" element={<HolidayApplicationComponent currentUser={currentUser}/>}></Route>

@@ -4,40 +4,41 @@ import { User } from '../interfaces/interfaces';
 import { BASE_URL } from '../globals';
 import { Modal } from './modal/Modal';
 import { keyboardKey } from '@testing-library/user-event';
+import { useCookies } from '@react-smart/react-cookie-service';
+
 
 export interface myAccountProps {
-    authToken: string;
-    userFromRouter: User;
+    currentUser: User;
 }
 
 const MyAccountComponent: React.FunctionComponent<myAccountProps> = (props) => {
-    const token = 'Basic ' + props.authToken;
     const [isModalOpen, setModalState] = React.useState(false);
+    const { getCookie } = useCookies(); 
     const toggleModal = () => setModalState(!isModalOpen);
 
     const [state, setState] = useState({
-        id: props.userFromRouter?.id,
-        firstname: props.userFromRouter?.firstname,
-        lastname: props.userFromRouter?.lastname,
+        id: props.currentUser?.id,
+        firstname: props.currentUser?.firstname,
+        lastname: props.currentUser?.lastname,
         password: '',
-        email: props.userFromRouter?.email,
-        role: props.userFromRouter?.role,
-        frozen: props.userFromRouter?.frozen,
-        urlaubstage: props.userFromRouter?.urlaubstage,
+        email: props.currentUser?.email,
+        role: props.currentUser?.role,
+        frozen: props.currentUser?.frozen,
+        urlaubstage: props.currentUser?.urlaubstage,
         pwChangedMsg: false
     });
 
     function changePw () {
         return axios.put(`${BASE_URL}/api/users/current-user/update`, { 
-            id: props.userFromRouter?.id,
-            firstname: props.userFromRouter?.firstname,
-            lastname: props.userFromRouter?.lastname,
+            id: props.currentUser?.id,
+            firstname: props.currentUser?.firstname,
+            lastname: props.currentUser?.lastname,
             password: state.password,
-            email: props.userFromRouter?.email,
-            role: props.userFromRouter?.role,
-            frozen: props.userFromRouter?.frozen,
-            urlaubstage: props.userFromRouter?.urlaubstage },
-            {headers: { authorization: token }})
+            email: props.currentUser?.email,
+            role: props.currentUser?.role,
+            frozen: props.currentUser?.frozen,
+            urlaubstage: props.currentUser?.urlaubstage },
+            {headers: { authorization: getCookie("basicAuthToken") }})
             .then(toggleModal)
             .then(() => setState({ ...state, pwChangedMsg: true }));
     }
@@ -57,19 +58,19 @@ const MyAccountComponent: React.FunctionComponent<myAccountProps> = (props) => {
                     <tbody>
                         <tr>
                             <td>User-ID</td>
-                            <td>{props.userFromRouter?.id}</td>
+                            <td>{props.currentUser?.id}</td>
                         </tr>
                         <tr>
                             <td>E-Mail</td>
-                            <td>{props.userFromRouter?.email}</td>
+                            <td>{props.currentUser?.email}</td>
                         </tr>
                         <tr>
                             <td>Vorname</td>
-                            <td>{props.userFromRouter?.firstname}</td>
+                            <td>{props.currentUser?.firstname}</td>
                         </tr>
                         <tr>
                             <td>Nachname</td>
-                            <td>{props.userFromRouter?.lastname}</td>
+                            <td>{props.currentUser?.lastname}</td>
                         </tr>
                     </tbody>
                 </table>

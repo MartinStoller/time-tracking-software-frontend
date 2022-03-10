@@ -19,9 +19,9 @@ const GetUsersComponent: React.FunctionComponent<{}> = (props) => {
 
     return (
         <>
-        <h1>Benutzerübersicht</h1>
-        <br />
-            <table className='userTable'>
+            <h1>Benutzerübersicht</h1>
+            <br />
+            <table className="tableVertical">
                 <thead>
                     <tr>
                         <th>ID</th>

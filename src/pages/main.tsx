@@ -143,8 +143,10 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                         </li>
                     </div>
                     {/* /menu */}
-                    <div id="copyright">&copy; 2022 Team React</div>
-                    <button id="logoutButton">Abmelden</button>
+                    <button className="formButtonRed" id="logoutButton">
+                        Abmelden
+                    </button>
+                    <p id="copyright">&copy; 2022 Team React</p>
                 </div>
                 {<hr />}
                 <div id="content-box">

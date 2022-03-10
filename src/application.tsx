@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/login';
 import SickDayRegistry from './components/sickDayRegistry';
 import GetUsersComponent from './components/getUsers';
+import MyAccountComponent from './components/myAccount';
 import MainPage from './pages/main';
 import OwnHolidaysDisplay from './components/ownHolidaysDisplay';
 import HolidayApplicationComponent from './components/applyForHolidays';
-import MyAccountComponent from './components/myAccount';
 import { useCookies } from '@react-smart/react-cookie-service';
 import { BASE_URL } from './globals';
 import axios from 'axios';
@@ -76,8 +76,8 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
                 <Route
                     path="*"
                     element={
-                        <main>
-                            <p>There's nothing here!</p>
+                        <main style={{ padding: '1rem' }}>
+                            <p style={{ color:"white", fontWeight:700 }}>There's nothing here!</p>
                         </main>
                     }
                 />

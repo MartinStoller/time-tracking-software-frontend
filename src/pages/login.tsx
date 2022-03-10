@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../globals';
 import './login.css';
 import { BASE_URL } from '../globals';
 import { useCookies } from '@react-smart/react-cookie-service';
@@ -70,7 +71,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
             <link rel="stylesheet" href="./login.css" />
             <div className="logo-container">
                 <a href="http://haeger-consulting.de" target="_blank">
-                    <img width="100%" src={logo} alt="Haeger Logo" />
+                    <img id="logo" src={logo} alt="Haeger Logo" />
                 </a>
             </div>
             <div className="login-box">
@@ -92,20 +93,13 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                     onKeyPress={startLoginWhenEnterKeyPressed}
                 />
                 <br />
-                <button id="loginButton" onClick={authenticate}>
+                <button className="formButtonGreen" onClick={authenticate}>
                     Anmelden
                 </button>
                 <h5 id={state.incorrectInput ? 'login-error-message' : 'hidden-message'}>Ungültige Benutzername/Passwort-Kombination.</h5>
                 <hr />
-                <p>
-                    <a href="#" /* TODO: link to a page that sais: "please contact an admin, since this is not a public Application" */ className="form__link">
-                        Passwort vergessen oder noch nicht registriert?
-                    </a>
-                </p>
+                <p style={{ margin: '0px' }}>&copy; 2022 Team React</p>
             </div>
-            <footer>
-                <div id="copyright">&copy; 2022 Team React</div>
-            </footer>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './main.css';
+import '../components/modal/modal.css'
 import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
 import { User } from '../interfaces/interfaces';
@@ -18,18 +19,11 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const token = 'Basic ' + props.authToken;
     const [currentUser, setCurrentUser] = useState<User>();
 
-    function delay(ms: number) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-
     function getCurrentUser() {
         axios.get(`${BASE_URL}/api/users/current-user`, { headers: { authorization: token } }).then((response) => {
             const resp = response.data;
             setCurrentUser(resp);
         });
-
-        /*         .then(() => console.log(currentUser))
-        .then(() => props.Sender(currentUser)) */
     }
 
     useEffect(() => {
@@ -173,8 +167,10 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                         </li>
                     </div>
                     {/* /menu */}
-                    <div id="copyright">&copy; 2022 Team React</div>
-                    <button id="logoutButton">Abmelden</button>
+                    <button className="formButtonRed" id="logoutButton">
+                        Abmelden
+                    </button>
+                    <p id="copyright">&copy; 2022 Team React</p>
                 </div>
                 {<hr />}
                 <div id="content-box">

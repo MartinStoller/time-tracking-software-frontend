@@ -2,9 +2,9 @@
     --color-error: #c33;
     --color-success: #4bb544;
     --color-border: black;
-    --color-box_bg: #f6f6f699;
+    --color-box_bg: #eee9;
     --color-footer_bg: #09090999;
-    --color-input_bg: #f6f6f6;
+    --color-input_bg: #eee;
     --color-input_bgfocus: white;
 
     background-image: url(../assets/background.jpg);
@@ -23,11 +23,11 @@ body {
 }
 .login-box {
     font: 400 2.5vh 'Roboto', sans-serif;
-    width: 85vw;
-    max-width: 60vh;
+    width: fit-content;
+    height: fit-content;
     margin: auto;
     text-align: center;
-    padding: 0.75vh 1vw 0 1vw;
+    padding: 2vh 2vw;
     border-style: solid;
     border-color: --color-border;
     border-radius: 2.75vh;
@@ -35,64 +35,47 @@ body {
     border-width: 0.2vh;
     box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.19), 0 0.6vh 0.6vh rgba(0, 0, 0, 0.23);
 }
-.logo-container {
-    width: 35%;
-    margin: auto auto 3vh auto;
-    text-align: center;
-}
 #login-error-message {
     margin: 3vh;
     color: var(--color-error);
 }
-h1 {
-    font-size: 3vh;
+#success-message {
+    color: var(--color-success);
+    filter: drop-shadow(0 0 .5vh #fff8);
 }
 
 input {
-    width: 80%;
+    width: fit-content;
     text-align: center;
-    font-size: 3vh;
-    margin-bottom: 1.5vh;
-    padding: 0.65vh;
+    font-size: 2.5vh;
+    margin: 0.5vh 0;
+    padding: 3px 15px;
     border-radius: 1.25vh;
-    border-width: 0.15vh;
+    border-width: 1px;
     background-color: var(--color-input_bg);
 }
 input:focus {
     outline: none;
     background-color: var(--color-input_bgfocus);
 }
-#loginButton {
+.formButtonGreen {
+    margin-top: 5px;
     transition-duration: 0.25s;
-    font-size: 3vh;
+    font-size: 2.5vh;
+    font-weight: 500;
     border: 1px solid black;
     border-radius: 1.25vh;
-    padding: 0.6vh 2.375vh;
+    padding: 3px 10px;
     background-color: var(--color-success);
 }
-#loginButton:hover:enabled {
+.formButtonGreen:hover:enabled {
     background-color: #13940a;
     color: white;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23);
 }
-button:disabled {
+.formButtonGreen:disabled {
     color: #333;
     background-color: #aaa;
-}
-footer {
-    color: white;
-    font: 300 2.25vh 'Roboto', sans-serif;
-    background-color: var(--color-footer_bg);
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    justify-content: center;
-    margin: 0 auto 0 auto;
-    padding-top: 0.5vh;
-    text-align: center;
-    width: 100vw;
-    height: 3.75vh;
 }
 
 #hidden-message {

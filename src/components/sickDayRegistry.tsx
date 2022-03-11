@@ -110,8 +110,8 @@ const SickDayRegistry: React.FunctionComponent<{}> = (props) => {
             <br />
             <button className="formButtonGreen" onClick={createSickDay}>Abschließen</button>
         <br /><br />
-        <h4 id={state.errorOccured ? 'login-error-message' : 'hidden-message'}>"Der Computer sagt Nein! Da hat etwas nicht funktioniert."</h4>
-        <h4 id={state.successfulEmployeeAssignment ? 'success-message' : 'hidden-message'}>"Krankheitstag erfolgreich eingetragen!"</h4>
+        <h4 id={state.errorOccured ? 'login-error-message' : 'hidden-message'}>Der Computer sagt Nein! Da hat etwas nicht funktioniert.</h4>
+        <h4 id={state.successfulEmployeeAssignment ? 'success-message' : 'hidden-message'}>Krankheitstag erfolgreich eingetragen!</h4>
     </div>);
 };
 export default SickDayRegistry;

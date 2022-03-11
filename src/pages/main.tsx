@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './main.css';
 import { Outlet, Link } from 'react-router-dom';
+import { useCookies } from '@react-smart/react-cookie-service';
 
 export interface IMainPageProps {
     userEmail: string;
     Sender: Function;
+    loggedInSender: Function;
 }
 
 const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
     const logo = require('../assets/logo.png');
+    const { deleteCookie} = useCookies(); 
+
+    function logout(){
+        deleteCookie('basicAuthToken');
+        props.loggedInSender(false);
+    }
 
     return (
         <div className="main-container">
@@ -143,7 +151,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                         </li>
                     </div>
                     {/* /menu */}
-                    <button className="formButtonRed" id="logoutButton">
+                    <button className="formButtonRed" id="logoutButton" onClick={logout}>
                         Abmelden
                     </button>
                     <p id="copyright">&copy; 2022 Team React</p>

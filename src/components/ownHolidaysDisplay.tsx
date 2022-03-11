@@ -25,11 +25,6 @@ const OwnHolidaysDisplay: React.FunctionComponent<ownHolidaysDisplayProps> = (pr
         getHolidayData()
     }, []);
 
-/*     useEffect(() => {
-        console.log(remainingHolidays)
-        console.log(pastHolidays)
-    }, [remainingHolidays, pastHolidays]); */
-
     return (
         <>
         <h1>Urlaubsübersicht</h1>

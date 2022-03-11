@@ -60,7 +60,7 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainPage userEmail={userEmail} Sender={setCurrentUser}/>}>
+                <Route path="/" element={<MainPage userEmail={userEmail} Sender={setCurrentUser} loggedInSender={setLoggedIn}/>}>
                     <Route path="/users" element={<GetUsersComponent />}></Route>
                     <Route path="/ownHolidays" element={<OwnHolidaysDisplay currentUser={currentUser}/>}></Route>
                     <Route path="/holidayApplication" element={<HolidayApplicationComponent currentUser={currentUser}/>}></Route>

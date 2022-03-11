@@ -30,3 +30,10 @@ export interface Project {
     start: string
     end: string
 }
+
+export interface Customer {
+    id: string
+    name: string
+    address: string
+    projects: Project[]
+}

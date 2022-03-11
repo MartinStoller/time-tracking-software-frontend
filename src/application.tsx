@@ -6,6 +6,7 @@ import GetUsersComponent from './components/getUsers';
 import MyAccountComponent from './components/myAccount';
 import MainPage from './pages/main';
 import OwnHolidaysDisplay from './components/ownHolidaysDisplay';
+import BillingExportComponent from "./components/billingExport"
 import HolidayApplicationComponent from './components/applyForHolidays';
 import { useCookies } from '@react-smart/react-cookie-service';
 import { BASE_URL } from './globals';
@@ -62,6 +63,7 @@ const HaegertimeApplication: React.FunctionComponent<{}> = (props) => {
             <Routes>
                 <Route path="/" element={<MainPage userEmail={userEmail} Sender={setCurrentUser} loggedInSender={setLoggedIn}/>}>
                     <Route path="/users" element={<GetUsersComponent />}></Route>
+                    <Route path="/billingExport" element={<BillingExportComponent />}></Route>
                     <Route path="/ownHolidays" element={<OwnHolidaysDisplay currentUser={currentUser}/>}></Route>
                     <Route path="/holidayApplication" element={<HolidayApplicationComponent currentUser={currentUser}/>}></Route>
                     <Route path="/sickDayRegistry" element={<SickDayRegistry/>}></Route>

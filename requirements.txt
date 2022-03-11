@@ -1,3 +1,4 @@
 npm install --save react react-dom
 npm install react-router-dom@next
 npm install --save @react-smart/react-cookie-service
+npm i --save-dev @types/luxon

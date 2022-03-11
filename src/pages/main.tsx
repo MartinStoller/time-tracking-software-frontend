@@ -90,7 +90,7 @@ const MainPage: React.FunctionComponent<IMainPageProps> = (props) => {
                                         <a href="#">Projektbesetzung</a>
                                     </li>
                                     <li>
-                                        <a href="#">Rechnung erstellen</a>
+                                        <Link to="billingExport">Rechnungen erstellen</Link>
                                     </li>
                                 </ul>
                             </div>
